@@ -1,0 +1,5 @@
+---
+
+- name: Identity Providers Configuration
+  ansible.builtin.include_tasks: idp.yml
+  when: ocp_cluster_config_idp
