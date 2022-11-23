@@ -3,3 +3,7 @@
 - name: Identity Providers Configuration
   ansible.builtin.include_tasks: idp.yml
   when: ocp_cluster_config_idp
+
+- name: Proxy Configuration
+  ansible.builtin.include_tasks: proxy.yml
+  when: ocp_cluster_config_proxy

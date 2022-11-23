@@ -6,3 +6,9 @@ ocp_cluster_config_idp:
   #   secret:
   #   client_id:
   #   issuer:
+
+# Proxy config
+ocp_cluster_config_proxy:
+  # http_proxy:
+  # https_proxy:
+  # no_proxy:
