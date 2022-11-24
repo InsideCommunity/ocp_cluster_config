@@ -38,3 +38,10 @@ ocp_cluster_config_cluster_role_binding:
   # - name:
   #   group:
   #   cluster_role:
+
+# Configure API certificate
+ocp_cluster_config_api_certificate:
+  # fqdn:
+  # secret_name:
+  # crt:
+  # key:
