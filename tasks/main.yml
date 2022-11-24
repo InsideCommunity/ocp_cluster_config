@@ -7,3 +7,7 @@
 - name: Proxy Configuration
   ansible.builtin.include_tasks: proxy.yml
   when: ocp_cluster_config_proxy
+
+- name: Cluster role Configuration
+  ansible.builtin.include_tasks: cluster_roles.yml
+  when: ocp_cluster_config_cluster_roles

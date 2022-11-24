@@ -12,3 +12,22 @@ ocp_cluster_config_proxy:
   # http_proxy:
   # https_proxy:
   # no_proxy:
+
+# Cluster role config
+ocp_cluster_config_cluster_roles:
+  # - name:
+  #   labels:
+  #     - example.for.label.name: "value"
+  #   rules:
+  #     - apiGroups:
+  #         - user.openshift.io
+  #         - ""
+  #       attributeRestrictions: null
+  #       resourceNames:
+  #         - system:admin
+  #       resources:
+  #         - systemusers
+  #       verbs:
+  #         - impersonate
+  #   aggregationRule:
+  #     - example.for.aggregation.rule: "value"
