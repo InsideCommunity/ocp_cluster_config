@@ -19,3 +19,7 @@
 - name: API Certificate
   ansible.builtin.include_tasks: api_certificate.yml
   when: ocp_cluster_config_api_certificate
+
+- name: Console Config
+  ansible.builtin.include_tasks: console.yml
+  when: ocp_cluster_config_console

@@ -45,3 +45,7 @@ ocp_cluster_config_api_certificate:
   # secret_name:
   # crt:
   # key:
+
+# Console config
+ocp_cluster_config_console:
+  # url:
