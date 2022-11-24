@@ -23,3 +23,7 @@
 - name: Console Config
   ansible.builtin.include_tasks: console.yml
   when: ocp_cluster_config_console
+
+- name: Ingress Controller Config
+  ansible.builtin.include_tasks: ingress_controller.yml
+  when: ocp_cluster_config_ingress_controller

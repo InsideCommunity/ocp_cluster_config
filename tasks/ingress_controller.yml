@@ -1,0 +1,26 @@
+---
+- name: Create Ingress Controller Certificate Secret
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: "{{ ocp_cluster_config_ingress_controller_secret_name }}"
+        namespace: openshift-ingress
+      data:
+        tls.crt: "{{ ocp_cluster_config_ingress_controller.crt }}"
+        tls.key: "{{ ocp_cluster_config_ingress_controller.key }}"
+
+- name: Update Ingress Controller
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: operator.openshift.io/v1
+      kind: IngressController
+      metadata:
+        name: default
+        namespace: openshift-ingress-operator
+      spec:
+        defaultCertificate:
+          name: "{{ ocp_cluster_config_ingress_controller_secret_name }}"
+    merge_type:
+      - merge
