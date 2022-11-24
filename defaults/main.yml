@@ -31,3 +31,10 @@ ocp_cluster_config_cluster_roles:
   #         - impersonate
   #   aggregationRule:
   #     - example.for.aggregation.rule: "value"
+
+
+# Cluster role binding
+ocp_cluster_config_cluster_role_binding:
+  # - name:
+  #   group:
+  #   cluster_role:

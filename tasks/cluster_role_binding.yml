@@ -1,0 +1,17 @@
+---
+
+- name: Bind Cluster role
+  kubernetes.core.k8s:
+    name: "{{ role_binding.name }}"
+    definition:
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRoleBinding
+      subjects:
+        - kind: Group
+          name: "{{ role_binding.group }}"
+          apiGroup: rbac.authorization.k8s.io
+      roleRef:
+        kind: ClusterRole
+        name: "{{ role_binding.cluster_role }}"
+        apiGroup: rbac.authorization.k8s.io
+  loop: "{{ ocp_cluster_config_cluster_role_binding }}"
