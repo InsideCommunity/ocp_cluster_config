@@ -1,0 +1,23 @@
+apiVersion: authorization.openshift.io/v1
+kind: ClusterRole
+metadata:
+  name: epaas-operator-extend
+{% if role.labels | d(false) %}
+  labels:
+{% for label in role.labels %}
+{% for key, value in label.items() %}
+    {{ key }}: {{ value }}
+{% endfor %}
+{% endfor %}
+{% endif %}
+{% if role.rules | d(false) %}
+  - {{ rule | to_nice_yaml | indent(4) -}}
+{% endfor %}
+{% endif %}
+{% if role.aggregationRule | d(false) %}
+aggregationRule:
+{% for aggrule in role.aggregationRule %}
+  - matchLabels:
+      {{ aggrule | to_nice_yaml -}}
+{% endfor %}
+{% endif %}
