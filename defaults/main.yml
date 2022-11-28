@@ -53,5 +53,5 @@ ocp_cluster_config_console:
 # Ingress Controller Configuration
 ocp_cluster_config_ingress_controller_secret_name: router-certs
 ocp_cluster_config_ingress_controller:
-  crt:
-  key:
+  # crt:
+  # key:
