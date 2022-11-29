@@ -27,3 +27,6 @@
 - name: Ingress Controller Config
   ansible.builtin.include_tasks: ingress_controller.yml
   when: ocp_cluster_config_ingress_controller
+
+- name: Infra node Config
+  ansible.builtin.include_tasks: infra-node.yml

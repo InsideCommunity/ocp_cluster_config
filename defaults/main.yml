@@ -55,3 +55,14 @@ ocp_cluster_config_ingress_controller_secret_name: router-certs
 ocp_cluster_config_ingress_controller:
   # crt:
   # key:
+
+# Node config
+ocp_cluster_config_node_name:
+ocp_cluster_config_is_infra_node: false
+ocp_cluster_config_node_taints:
+  - effect: NoSchedule
+    key: infra
+    value: reserved
+  - effect: NoExecute
+    key: infra
+    value: reserved

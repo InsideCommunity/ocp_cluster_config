@@ -1,0 +1,12 @@
+---
+- name: Set infra nodes label
+  kubernetes.core.k8s:
+    definition:
+      kind: Node
+      metadata:
+        name: "{{ ocp_cluster_config_node_name }}"
+        labels:
+          node-role.kubernetes.io/infra: ""
+      spec:
+        taints: "{{ ocp_cluster_config_node_taints }}"
+  when: ocp_cluster_config_is_infra_node
