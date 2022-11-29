@@ -66,3 +66,11 @@ ocp_cluster_config_node_taints:
   - effect: NoExecute
     key: infra
     value: reserved
+
+# Router config
+ocp_cluster_config_set_router_label: false
+ocp_cluster_config_router_to_infra_node: false
+ocp_cluster_config_router_replicas: 3
+ocp_cluster_configrouter_tunningOptions:
+  clientTimeout: 60s
+  serverTimeout: 60s
