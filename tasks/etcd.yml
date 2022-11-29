@@ -1,0 +1,22 @@
+---
+- name: Enable etcd encryption
+  kubernetes.core.k8s:
+    definition:
+      kind: APIServer
+      metadata:
+        name: cluster
+      spec:
+        encryption:
+          type: aescbc
+  when: ocp_cluster_config_etcd_encrypt
+
+- name: Wait for etcd encryption
+  kubernetes.core.k8s_info:
+    api_version: operator.openshift.io/v1
+    kind: openshiftapiserver
+    name: clsuter
+  register: result
+  until: "'EncryptionCompleted' in result.resources[0].status.conditions | json_query('[.type==`Encrypted`].reason')"
+  retries: 240
+  delay: 15
+  when: ocp_cluster_config_etcd_encrypt

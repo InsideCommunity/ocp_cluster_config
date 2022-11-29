@@ -33,3 +33,6 @@
 
 - name: Monitoring Config
   ansible.builtin.include_tasks: monitor.yml
+
+- name: ETCD config
+  ansible.builtin.include_tasks: etcd.yml

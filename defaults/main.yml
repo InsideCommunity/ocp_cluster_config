@@ -77,3 +77,6 @@ ocp_cluster_configrouter_tunningOptions:
 
 # Monitoring config
 ocp_cluster_config_monitoring_on_infra_node: false
+
+# ETCD Config
+ocp_cluster_config_etcd_encrypt: false
