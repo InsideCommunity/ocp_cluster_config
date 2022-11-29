@@ -30,3 +30,6 @@
 
 - name: Infra node Config
   ansible.builtin.include_tasks: infra-node.yml
+
+- name: Monitoring Config
+  ansible.builtin.include_tasks: monitor.yml

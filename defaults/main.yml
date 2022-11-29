@@ -74,3 +74,6 @@ ocp_cluster_config_router_replicas: 3
 ocp_cluster_configrouter_tunningOptions:
   clientTimeout: 60s
   serverTimeout: 60s
+
+# Monitoring config
+ocp_cluster_config_monitoring_on_infra_node: false

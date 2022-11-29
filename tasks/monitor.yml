@@ -1,0 +1,5 @@
+---
+- name: Move monitoring to infra nodes
+  kubernetes.core.k8s:
+    definition: "{{ lookup('template', 'cluster-monitoring-config.yml') }}"
+  when: ocp_cluster_config_monitoring_on_infra_node
