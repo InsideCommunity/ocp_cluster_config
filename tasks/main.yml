@@ -42,3 +42,7 @@
 
 - name: Hardening config
   ansible.builtin.include_tasks: hardening.yml
+
+- name: Tuning
+  ansible.builtin.include_tasks: tuning.yml
+  when: ocp_cluster_config_add_custom_kubeconfig_mcp

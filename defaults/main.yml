@@ -124,3 +124,11 @@ ocp_cluster_config_hardening_allowed_registries:
 ocp_cluster_config_hardening_remove_helmchar_repo: True
 ## Remove sample operator
 ocp_cluster_config_remove_sample_operator: True
+ocp_cluster_config_create_registries_whitelist: True
+# Tuning
+## Create & add custom-kubeconfig label to all mcp
+ocp_cluster_config_add_custom_kubeconfig_mcp: True
+ocp_cluster_config_kubelet_podPerCore: 10
+ocp_cluster_config_kubelet_maxPods: 240
+ocp_cluster_config_kubelet_cpu: 1000m
+ocp_cluster_config_kubelet_memory: 4Gi
