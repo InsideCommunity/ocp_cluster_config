@@ -1,0 +1,152 @@
+---
+- name: Disabling project self-provisioning
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRoleBinding
+      metadata:
+        name: self-provisioners
+        annotations:
+          rbac.authorization.kubernetes.io/autoudate: "false"
+      subjects: null
+  when: ocp_cluster_config_hardening_self_provisioning
+
+- name: Add information message for namespace creation request
+  kubernetes.core.k8s:
+    definition:
+      apiVerison: config.openshift.io/v1
+      kind: Project
+      metadata:
+        name: cluster
+      spec:
+        projectRequestMessage: "{{ ocp_cluster_config_hardening_nm_creation_message }}"
+  when: ocp_cluster_config_hardening_nm_creation_request
+
+- name: Remove docker-build rights for customers
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRoleBinding
+      metadata:
+        name: system:build-strategy-docker-binding
+        annotations:
+          rbac.authorization.kubernetes.io/autoudate: "false"
+      subjects: null
+  when: ocp_cluster_config_hardening_docker_build
+
+- name: Apply magic label on default ns to allow network policies
+  kubernetes.core.k8s:
+    definition:
+      kind: Namespace
+      metadata:
+        name: default
+        labels:
+          network.openshift.io/policy-group: ingress
+  when: ocp_cluster_config_hardening_allow_network_policies
+
+- name: Create base template for new projects
+  kubernetes.core.k8s:
+    src: project_template.yaml
+  when: ocp_cluster_config_hardening_projects_template
+
+- name: Apply base template for new projects
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: config.openshift.io/v1
+      kind: Project
+      metadata:
+        name: cluster
+      spec:
+        projectRequestTemplate:
+          name: project-request
+  when: ocp_cluster_config_hardening_projects_template
+
+- name: Remove proxy env variables from build pods
+  kubernetes.core.k8s:
+    api_version: config.openshift.io/v1
+    name: cluster
+    kind: Build
+    definition:
+      spec:
+        buildDefaults:
+          defaultProxy: {}
+  when: ocp_cluster_config_hardening_remove_proxy_env
+
+- name: Enforce cluster-wide nodeSelector
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: config.openshift.io/v1
+      kind: Scheduler
+      metadata:
+        name: cluster
+      spec:
+        defaultNodeSelector: node-role.kubernetes.io/worker=
+        mastersSchedulable: false
+  when: ocp_cluster_config_hardening_enforce_cluster_wide_nodeselector
+
+- name: Remove kubeadmin credentials
+  kubernetes.core.k8s:
+    state: absent
+    api_version: v1
+    kind: Secret
+    name: kubeadmin
+    namespace: kube-system
+  when: ocp_cluster_config_hardening_remove_kubeadmin_cred
+
+- name: Remove scheduler constrains from default Namespace
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        annotations:
+          openshift.io/node-selector: ""
+          scheduler.alpha.kubernetes.io/defaultTolerations: "[{\"operator\": \"Exists\"}]"
+        name: default
+  when: ocp_cluster_config_hardening_remove_schedule_constraints
+
+- name: Add edit rights to operators in default ns
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: RoleBinding
+      metadata:
+        creationTimestamp: null
+        name: epaas-operators
+        namespace: default
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: ClusterRole
+        name: edit
+      subjects:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: 2S57-cluster-admin
+  when: ocp_cluster_config_hardening_edit_rights_operator_default_ns
+
+- name: Restrict allowed registries
+  kubernetes.core.k8s:
+    definition: "{{ lookup('template', 'images_config.yml.j2') }}"
+  when: ocp_cluster_config_hardening_allowed_registries | d(false)
+
+- name: Remove helmchart repository
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: helm.openshift.io/v1beta1
+      kind: HelmChartRepository
+      metadata:
+        name: openshift-helm-charts
+      spec:
+        disabled: true
+  when: ocp_cluster_config_hardening_remove_helmchar_repo
+
+- name: Remove sample operator
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: samples.operator.openshift.io/v1
+      kind: Config
+      metadata:
+        name: cluster
+      spec:
+        managementState: Removed
+  when: ocp_cluster_config_remove_sample_operator

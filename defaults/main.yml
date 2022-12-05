@@ -89,3 +89,38 @@ ocp_cluster_config_console_notification:
   # color: '#fff'
   # location: BannerTop
   # text: 'Export Control: Not assessed'
+
+# Hardening, set True to enable hardening
+## Disabling project self provisionning
+ocp_cluster_config_hardening_self_provisioning: True
+## Namespace creation request message
+ocp_cluster_config_hardening_nm_creation_request: True
+ocp_cluster_config_hardening_nm_creation_message: "To request a new project fill out the project request form located at http://request.epaas.eu.airbus.corp/request/request_hosting.php"
+## Remove docker-build rights for customers
+ocp_cluster_config_hardening_docker_build: True
+## Apply magic label on default ns to allow network policies
+ocp_cluster_config_hardening_allow_network_policies: True
+## Create & Apply base template for new projects
+ocp_cluster_config_hardening_projects_template: True
+## Remove proxy env variables from build pods
+ocp_cluster_config_hardening_remove_proxy_env: True
+## Enforce cluster-wide nodeSelector
+ocp_cluster_config_hardening_enforce_cluster_wide_nodeselector: True
+## Remove kubeadmin credentials
+ocp_cluster_config_hardening_remove_kubeadmin_cred: True
+## Remove scheduler constrains from default Namespace
+ocp_cluster_config_hardening_remove_schedule_constraints: True
+## Add edit rights to operators in default ns
+## TODO : Rework global RoleBinding
+ocp_cluster_config_hardening_edit_rights_operator_default_ns: True
+## Restrict allowed registries
+ocp_cluster_config_hardening_allowed_registries:
+  - registry.redhat.io
+  - quay.io
+  - registry.access.redhat.com
+  - registry.connect.redhat.com
+  - registry.2s59.eu.airbus.corp
+## Remove helmchart repository
+ocp_cluster_config_hardening_remove_helmchar_repo: True
+## Remove sample operator
+ocp_cluster_config_remove_sample_operator: True

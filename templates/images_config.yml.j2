@@ -1,0 +1,15 @@
+apiVersion: config.openshift.io/v1
+kind: Image
+metadata:
+  name: cluster
+spec:
+  allowedRegistriesForImport:
+{%  for registry in ocp_cluster_config_hardening_allowed_registries %}
+  - domainName: "{{ registry }}"
+    insecure: false
+{%  endfor %}
+  registrySources:
+    allowedRegistries:
+{%  for registry in ocp_cluster_config_hardening_allowed_registries %}
+    - "{{ registry }}"
+{%  endfor %}
