@@ -36,3 +36,6 @@
 
 - name: ETCD config
   ansible.builtin.include_tasks: etcd.yml
+
+- name: Webconsole Style
+  ansible.builtin.include_tasks: webconsole.yml

@@ -80,3 +80,12 @@ ocp_cluster_config_monitoring_on_infra_node: false
 
 # ETCD Config
 ocp_cluster_config_etcd_encrypt: false
+
+# Webconsole Style
+ocp_cluster_config_logo: AIRBUS_White_40px.png
+ocp_cluster_config_webconsole_favicon: #'/static/assets/openshift.svg'
+ocp_cluster_config_console_notification:
+  # backgroundColor: '#005587'
+  # color: '#fff'
+  # location: BannerTop
+  # text: 'Export Control: Not assessed'

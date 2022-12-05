@@ -1,0 +1,73 @@
+---
+- name: Get custom logo
+  ansible.builtin.slurp:
+    src: "{{ ocp_cluster_config_webconsole_logo }}"
+  register: _logo
+  when: ocp_cluster_config_webconsole_logo
+
+- name: Create logo ConfigMap
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: console-custom-logo
+        namespace: openshift-config
+      binaryData:
+        logo.png: "{{ _logo.content }}"
+  when: _logo | d(false)
+
+- name: Update console CRD
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: operator.openshift.io/v1
+      kind: Console
+      metadata:
+        name: cluster
+      spec:
+        customization:
+          customLogoFile:
+            key: logo.png
+            name: console-custom-logo
+          customProductName: "{{ ocp_cluster_config_webconsole_customproductname }}"
+        managementState: Managed
+    merge_type:
+      - merge
+    when: ocp_cluster_config_webconsole_customproductname
+
+- name: Create special route for custom favicon
+  kubernetes.core.k8s:
+    definition:
+      kind: Route
+      apiVersion: route.openshift.io/v1
+      metadata:
+        name: console-custom-favicon
+        namespace: openshift-console
+        labels:
+          app: console
+        annotations:
+          haproxy.router.openshift.io/rewrite-target: "{{ ocp_cluster_config_webconsole_favicon }}"
+      spec:
+        host: "{{ ocp_cluster_config_console.url }}"
+        path: /favicon.ico
+        to:
+          kind: Service
+          name: console
+          weight: 100
+        port:
+          targetPort: https
+        tls:
+          termination: reencrypt
+          insecureEdgeTerminationPolicy: Redirect
+        wildcartPolicy: None
+  when: ocp_cluster_config_webconsole_favicon | d(false)
+
+- name: Create export control banner
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: console.openshift.io/v1
+      kind: ConsoleNotification
+      metadata:
+        name: exportcontrol
+      spec: "{{ ocp_cluster_config_console_notification }}"
+  when: ocp_cluster_config_console_notification | d(false)
