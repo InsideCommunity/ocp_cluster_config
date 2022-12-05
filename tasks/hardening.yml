@@ -150,3 +150,16 @@
       spec:
         managementState: Removed
   when: ocp_cluster_config_remove_sample_operator
+
+- name: Create registries whitelist
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: config.openshift.io/v1
+      kind: Image
+      metadata:
+        name: cluster
+      spec:
+        allowedRegistriesForImport: "{{ ocp_cluster_config_registries_whitelist_for_import }}"
+        registrySources:
+          allowedRegistries: "{{ ocp_cluster_config_registries_whitelist_allowedRegistries }}"
+  when: ocp_cluster_config_create_registries_whitelist
