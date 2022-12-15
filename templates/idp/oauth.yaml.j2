@@ -23,7 +23,7 @@ spec:
 {% endif %}
 {% if idp.extra_authorize_parameters | d(false) %}
         extraAuthorizeParameters:
-{% for key, val in idp.extra_authorize_parameters.iteritems() %}
+{% for key, val in idp.extra_authorize_parameters.items() %}
           {{ key }}: {{ val }}
 {% endfor %}
 {% endif %}

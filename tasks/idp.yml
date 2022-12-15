@@ -6,7 +6,7 @@
     _secret_name: "idp-{{ idp.name }}-secret"
     _secret_namespace: openshift-config
     _secrets:
-      - clientSecret: "{{ idp.secret }}"
+      clientSecret: "{{ idp.secret }}"
   loop: ocp_cluster_config_idp
   loop_control:
     loop_var: idp
