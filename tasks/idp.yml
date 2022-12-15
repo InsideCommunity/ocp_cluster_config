@@ -1,45 +1,19 @@
 ---
 - name: Generate IDP secret
   kubernetes.core.k8s:
-    definition:
-      kind: Secret
-      metadata:
-        name: "idp-{{ idp.name }}-secret"
-        namespace: openshift-config
-      data:
-        clientSecret: "{{ idp.secret | b64encode }}"
+    template: secret_opaque.yaml.j2
+  vars:
+    _secret_name: "idp-{{ idp.name }}-secret"
+    _secret_namespace: openshift-config
+    _secrets:
+      - clientSecret: "{{ idp.secret }}"
   loop: ocp_cluster_config_idp
   loop_control:
     loop_var: idp
 
-- name: Set IDP
+- name: Set OpenID IDP
   kubernetes.core.k8s:
-    definition:
-      kind: OAuth
-      apiVersion: config.openshift.io/v1
-      metadata:
-        name: cluster
-      spec:
-        identityProviders:
-          - name: "{{ idp.name }}"
-            mappingMethod: claim
-            type: OpenID
-            openID:
-              clientID: "{{ idp.client_id }}"
-              clientSecret:
-                name: "idp-{{ idp.name }}-secret"
-              claims:
-                email:
-                  - email
-                id:
-                  - sub
-                name:
-                  - name
-                preferredUsername:
-                  - preferred_username
-              issuer: "{{ idp.issuer }}"
-    merge_type:
-      - merge
-  loop: ocp_cluster_config_idp
+    template: idp/oauth.yaml.j2
+  loop: ocp_cluster_config_idp_openid
   loop_control:
     loop_var: idp

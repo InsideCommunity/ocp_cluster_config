@@ -1,0 +1,55 @@
+apiVersion: config.openshift.io/v1
+kind: OAuth
+metadata:
+  name: cluster
+spec:
+  identityProviders:
+    - name: {{ idp.name }}
+      mappingMethod: {{ idp.mapping_method | d(claim) }}
+      type: OpenID
+      openID:
+        clientID: {{ idp.openid.client_id }}
+        clientSecret:
+          name: "idp-{{ idp.name }}-secret"
+{% if idp.ca | d(false) %
+        ca:
+          name: {{ idp.ca }}
+{% endif %}
+{% if idp.extra_scopes | d(false) %}
+        extraScopes:
+{% for scope in idp.extra_scopes %}
+          - {{ scope }}
+{% endfor %}
+{% endif %}
+{% if idp.extra_authorize_parameters | d(false) %}
+        extraAuthorizeParameters:
+{% for key, val in idp.extra_authorize_parameters.iteritems() %}
+          {{ key }}: {{ val }}
+{% endfor %}
+{% endif %}
+        claims:
+{% if idp.claims.preferredUsername | d(false) %}
+          preferredUsername:
+{% for pref_user in idp.claims.preferred_username %}
+            - {{ pref_user }}
+{% endfor %}
+{% endif %}
+{% if idp.claims.email | d(false) %}
+        email:
+{% for email in idp.claims.email %}
+            - {{ email }}
+{% endfor %}
+{% endif %}
+{% if idp.claims.groups | d(false) %}
+        groups:
+{% for group in idp.claims.groups %}
+            - {{ group }}
+{% endfor %}
+{% endif %}
+{% if idp.claims.name | d(false) %}
+        name:
+{% for name in idp.claims.name %}
+            - {{ name }}
+{% endfor %}
+{% endif %}
+        issuer: "{{ idp.issuer }}"

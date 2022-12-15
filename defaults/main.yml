@@ -1,10 +1,20 @@
 ---
 
 # Identity Providers info
-ocp_cluster_config_idp:
+ocp_cluster_config_idp_openid:
   # - name:
   #   secret:
-  #   client_id:
+  #   mapping_method: # Optional
+  #   openid:
+  #     client_id:
+  #     ca: # Optional : ConfigMap for CA
+  #     extra_scopes: [] # Optional
+  #     extra_authorize_parameters: {} # Optional
+  #     claims:
+  #       preferred_username: [] # Optionnal
+  #       name: [] # Optionnal
+  #       email: [] # Optionnal
+  #       groups: [] # Optionnal
   #   issuer:
 
 # Proxy config
@@ -36,8 +46,14 @@ ocp_cluster_config_cluster_roles:
 # Cluster role binding
 ocp_cluster_config_cluster_role_binding:
   # - name:
-  #   group:
-  #   cluster_role:
+  #   subjects:
+  #     - kind:
+  #       name:
+  #       apiGroup:
+  #   roleRef:
+  #     kind:
+  #     name:
+  #     apiGroup:
 
 # Configure API certificate
 ocp_cluster_config_api_certificate:

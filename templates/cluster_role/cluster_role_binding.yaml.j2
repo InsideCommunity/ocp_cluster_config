@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: "{{ role_binding.name }}"
+subjects:
+{% for subject in role_binding.subject %}
+  - kind: {{ subject.kind }}
+    name: {{ subject.name }}
+    apiGroup: {{ subject.apiGroup }}
+{% endfor %}
+roleRef:
+  kind: {{ role_binding.roleRef.kind }}
+  name: {{ role_binding.roleRef.name }}
+  apiGroup: {{ role_binding.roleRef.apiGroup }}

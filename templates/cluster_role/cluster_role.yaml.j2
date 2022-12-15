@@ -1,7 +1,7 @@
 apiVersion: authorization.openshift.io/v1
 kind: ClusterRole
 metadata:
-  name: epaas-operator-extend
+  name: "{{ role.name }}"
 {% if role.labels | d(false) %}
   labels:
 {% for label in role.labels %}
