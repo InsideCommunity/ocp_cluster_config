@@ -1,0 +1,24 @@
+apiVersion: config.openshift.io/v1
+kind: Proxy
+metadata:
+  name: cluster
+spec:
+{% if ocp_cluster_config_proxy.http_proxy | d(false) %}
+  httpProxy: "{{ ocp_cluster_config_proxy.http_proxy }}"
+{% endif %}
+{% if ocp_cluster_config_proxy.https_proxy | d(false) %}
+  httpsProxy: "{{ ocp_cluster_config_proxy.https_proxy }}"
+{% endif %}
+{% if ocp_cluster_config_proxy.no_proxy | d(false) %}
+  noProxy: "{{ ocp_cluster_config_proxy.no_proxy }}"
+{% endif %}
+{% if ocp_cluster_config_proxy.readiness_endpoints | d(false) %}
+  readinessEndpoints:
+{% for endpoint in ocp_cluster_config_proxy.readiness_endpoints %}
+    - {{ endpoint }}
+{% endfor %}
+{% endif %}
+{% if ocp_cluster_config_proxy.trusted_ca | d(false) %}
+  trustedCA:
+    name: {{ ocp_cluster_config_proxy.trusted_ca }}
+{% endif %}

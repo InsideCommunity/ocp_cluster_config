@@ -19,9 +19,11 @@ ocp_cluster_config_idp_openid:
 
 # Proxy config
 ocp_cluster_config_proxy:
-  # http_proxy:
-  # https_proxy:
-  # no_proxy:
+  # http_proxy: # Optionnal
+  # https_proxy: # Optionnal
+  # no_proxy: # Optionnal
+  # readiness_endpoints: [] # Optionnal
+  # trusted_ca: # Optionnal
 
 # Cluster role config
 ocp_cluster_config_cluster_roles:
