@@ -1,7 +1,9 @@
 ---
-- name: Create API certificate secret
+- name: Update API Server certificate
   kubernetes.core.k8s:
-    template: secret.yaml.j2
+    template:
+      - secret.yaml.j2
+      - api_server/api_certs.yaml.j2
   vars:
     _secret_name: "{{ ocp_cluster_config_api_certificate.secret_name }}"
     _secret_namespace: openshift-config
@@ -9,7 +11,3 @@
       tls.crt: "{{ ocp_cluster_config_api_certificate.crt }}"
       tls.key: "{{ ocp_cluster_config_api_certificate.key }}"
     _secret_type:
-
-- name: Update APIServer certificate
-  kubernetes.core.k8s:
-    template: api_server/api_certs.yaml.j2
