@@ -26,7 +26,7 @@ ocp_cluster_config_proxy:
   # trusted_ca: # Optionnal
 
 # Cluster role config
-ocp_cluster_config_cluster_roles:
+ocp_cluster_config_cluster_roles: []
   # - name:
   #   labels: # Optionnal
   #     example.for.label.name: "value"
@@ -46,7 +46,7 @@ ocp_cluster_config_cluster_roles:
 
 
 # Cluster role binding
-ocp_cluster_config_cluster_role_binding:
+ocp_cluster_config_cluster_role_binding: []
   # - name:
   #   subjects:
   #     - kind:

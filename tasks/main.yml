@@ -10,11 +10,6 @@
 
 - name: Cluster role Configuration
   ansible.builtin.include_tasks: cluster_roles.yml
-  when: ocp_cluster_config_cluster_roles
-
-- name: Cluster role binding Configuration
-  ansible.builtin.include_tasks: cluster_role_binding.yml
-  when: ocp_cluster_config_cluster_role_binding
 
 - name: API Certificate
   ansible.builtin.include_tasks: api_certificate.yml
