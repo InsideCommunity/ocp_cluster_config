@@ -4,18 +4,16 @@ metadata:
   name: "{{ role.name }}"
 {% if role.labels | d(false) %}
   labels:
-{% for label in role.labels %}
-{% for key, value in label.items() %}
+{% for key, value in labels.items() %}
     {{ key }}: {{ value }}
-{% endfor %}
 {% endfor %}
 {% endif %}
 {% if role.rules | d(false) %}
   - {{ rule | to_nice_yaml | indent(4) -}}
 {% endif %}
-{% if role.aggregationRule | d(false) %}
+{% if role.aggregation_rule | d(false) %}
 aggregationRule:
-{% for aggrule in role.aggregationRule %}
+{% for aggrule in role.aggregation_rule %}
   - matchLabels:
       {{ aggrule | to_nice_yaml -}}
 {% endfor %}

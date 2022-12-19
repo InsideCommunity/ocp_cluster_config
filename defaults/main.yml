@@ -28,8 +28,8 @@ ocp_cluster_config_proxy:
 # Cluster role config
 ocp_cluster_config_cluster_roles:
   # - name:
-  #   labels:
-  #     - example.for.label.name: "value"
+  #   labels: # Optionnal
+  #     example.for.label.name: "value"
   #   rules:
   #     - apiGroups:
   #         - user.openshift.io
@@ -41,7 +41,7 @@ ocp_cluster_config_cluster_roles:
   #         - systemusers
   #       verbs:
   #         - impersonate
-  #   aggregationRule:
+  #   aggregation_rule:
   #     - example.for.aggregation.rule: "value"
 
 
