@@ -1,0 +1,10 @@
+kind: APIServer
+metadata:
+  - name: cluster
+spec:
+  servingCerts:
+    namedCertificates:
+      - names:
+          - "{{ ocp_cluster_config_api_certificate.fqdn }}"
+        servingCertificate:
+          name: "{{ ocp_cluster_config_api_certificate.secret_name }}"

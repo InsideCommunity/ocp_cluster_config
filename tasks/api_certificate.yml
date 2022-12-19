@@ -9,29 +9,7 @@
       tls.crt: "{{ ocp_cluster_config_api_certificate.crt }}"
       tls.key: "{{ ocp_cluster_config_api_certificate.key }}"
     _secret_type:
-    # definition:
-    #   apiVersion: v1
-    #   kind: Secret
-    #   metadata:
-    #     name: "{{ ocp_cluster_config_api_certificate.secret_name }}"
-    #     namespace: openshift-config
-    #   data:
-    #     tls.crt: "{{ ocp_cluster_config_api_certificate.crt }}"
-    #     tls.key: "{{ ocp_cluster_config_api_certificate.key }}"
-    #   type: kubernetes.io/tls
 
 - name: Update APIServer certificate
   kubernetes.core.k8s:
-    definition:
-      kind: APIServer
-      metadata:
-        - name: cluster
-      spec:
-        servingCerts:
-          namedCertificates:
-            - names:
-                - "{{ ocp_cluster_config_api_certificate.fqdn }}"
-              servingCertificate:
-                name: "{{ ocp_cluster_config_api_certificate.secret_name }}"
-    merge_type:
-      - merge
+    template: api_server/api_certs.yaml.j2
