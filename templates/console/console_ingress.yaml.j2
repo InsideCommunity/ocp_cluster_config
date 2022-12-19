@@ -1,0 +1,9 @@
+apiVersion: config.openshift.io/v1
+kind: Ingress
+metadata:
+  name: cluster
+spec:
+  componentRoutes:
+    - name: console
+      namespace: openshift-console
+      hostname: "{{ ocp_cluster_config_console.url }}"
