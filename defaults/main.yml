@@ -75,9 +75,9 @@ ocp_cluster_config_ingress_controller:
   # key:
 
 # Node config
-ocp_cluster_config_node_name:
-ocp_cluster_config_is_infra_node: false
-ocp_cluster_config_node_taints:
+# List of Infra nodes name
+ocp_cluster_config_infra_nodes: []
+ocp_cluster_config_infra_node_taints:
   - effect: NoSchedule
     key: infra
     value: reserved
