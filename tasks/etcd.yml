@@ -1,13 +1,7 @@
 ---
 - name: Enable etcd encryption
   kubernetes.core.k8s:
-    definition:
-      kind: APIServer
-      metadata:
-        name: cluster
-      spec:
-        encryption:
-          type: aescbc
+    template: api_server/etcd_encrypt.yaml.j2
   when: ocp_cluster_config_etcd_encrypt
 
 - name: Wait for etcd encryption
