@@ -3,4 +3,4 @@
 - name: Update Console URL
   kubernetes.core.k8s:
     template: console/console_ingress.yaml.j2
-  when: ocp_cluster_config_console.url | d(false)
+  when: ocp_cluster_config_console_url | d(false)

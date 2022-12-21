@@ -64,10 +64,6 @@ ocp_cluster_config_api_certificate:
   # crt:
   # key:
 
-# Console config
-ocp_cluster_config_console:
-  # url:
-
 # Ingress Controller Configuration
 ocp_cluster_config_ingress_controller_secret_name: router-certs
 ocp_cluster_config_ingress_controller:
@@ -99,8 +95,11 @@ ocp_cluster_config_monitoring_on_infra_node: false
 # ETCD Config
 ocp_cluster_config_etcd_encrypt: false
 
+# Console config
+ocp_cluster_config_console_url:
+
 # Webconsole Style
-ocp_cluster_config_logo: AIRBUS_White_40px.png
+ocp_cluster_config_webconsole_logo_path:
 ocp_cluster_config_webconsole_favicon: #'/static/assets/openshift.svg'
 ocp_cluster_config_console_notification:
   # backgroundColor: '#005587'
