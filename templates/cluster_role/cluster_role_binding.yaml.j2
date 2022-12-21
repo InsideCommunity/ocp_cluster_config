@@ -1,14 +1,29 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: "{{ role_binding.name }}"
+  name: "{{ role_binding.metadata.name }}"
+{% if role_binding.metadata.annotations | d(false) %}
+  annotations:
+{% for key, val in role_binding.metadata.annotations.items() %}
+    {{ key }}: {{ val }}
+{% endfor %}
+{% endif %}
+{% if role_binding.subjects | d(false) %}
+{% if role_binding.subjects == 'null' %}
+subjects: null
+{% else %}
 subjects:
-{% for subject in role_binding.subject %}
+{% for subject in role_binding.subjects %}
   - kind: {{ subject.kind }}
     name: {{ subject.name }}
     apiGroup: {{ subject.apiGroup }}
+{% endif %}
+{% endif %}
 {% endfor %}
+{% endif %}
+{% if role_binding.roleRef | d(false) %}
 roleRef:
   kind: {{ role_binding.roleRef.kind }}
   name: {{ role_binding.roleRef.name }}
   apiGroup: {{ role_binding.roleRef.apiGroup }}
+{% endif %}

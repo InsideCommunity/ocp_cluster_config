@@ -47,7 +47,10 @@ ocp_cluster_config_cluster_roles: []
 
 # Cluster role binding
 ocp_cluster_config_cluster_role_binding: []
-  # - name:
+  # - metadata:
+  #     name:
+  #     annotations:
+  #       example: value
   #   subjects:
   #     - kind:
   #       name:

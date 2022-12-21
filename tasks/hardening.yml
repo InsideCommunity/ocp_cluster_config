@@ -1,32 +1,26 @@
 ---
 - name: Disabling project self-provisioning
   kubernetes.core.k8s:
-    definition:
-      apiVersion: rbac.authorization.k8s.io/v1
-      kind: ClusterRoleBinding
+    template: cluster_role/cluster_role_binding.yaml.j2
+  vars:
+    role_binding:
       metadata:
         name: self-provisioners
         annotations:
           rbac.authorization.kubernetes.io/autoudate: "false"
-      subjects: null
+        subjects: null
   when: ocp_cluster_config_hardening_self_provisioning
 
 - name: Add information message for namespace creation request
   kubernetes.core.k8s:
-    definition:
-      apiVerison: config.openshift.io/v1
-      kind: Project
-      metadata:
-        name: cluster
-      spec:
-        projectRequestMessage: "{{ ocp_cluster_config_hardening_nm_creation_message }}"
+    template: project/custom_project_request_message.yaml.j2
   when: ocp_cluster_config_hardening_nm_creation_request
 
 - name: Remove docker-build rights for customers
   kubernetes.core.k8s:
-    definition:
-      apiVersion: rbac.authorization.k8s.io/v1
-      kind: ClusterRoleBinding
+    template: cluster_role/cluster_role_binding.yaml.j2
+  vars:
+    role_binding:
       metadata:
         name: system:build-strategy-docker-binding
         annotations:
@@ -36,29 +30,17 @@
 
 - name: Apply magic label on default ns to allow network policies
   kubernetes.core.k8s:
-    definition:
-      kind: Namespace
-      metadata:
-        name: default
-        labels:
-          network.openshift.io/policy-group: ingress
+    template: namespace/allow_network_policies.yaml.j2
   when: ocp_cluster_config_hardening_allow_network_policies
 
 - name: Create base template for new projects
   kubernetes.core.k8s:
-    src: project_template.yaml
+    template: project_template.yaml
   when: ocp_cluster_config_hardening_projects_template
 
 - name: Apply base template for new projects
   kubernetes.core.k8s:
-    definition:
-      apiVersion: config.openshift.io/v1
-      kind: Project
-      metadata:
-        name: cluster
-      spec:
-        projectRequestTemplate:
-          name: project-request
+    template: project/custom_base_template.yaml.j2
   when: ocp_cluster_config_hardening_projects_template
 
 - name: Remove proxy env variables from build pods
