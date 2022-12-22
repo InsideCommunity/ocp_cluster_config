@@ -110,18 +110,33 @@ ocp_cluster_config_console_notification:
   # location: BannerTop
   # text: 'Export Control: Not assessed'
 
+# Project template customization
+## Create & Apply base template for new projects. Need a file.
+ocp_cluster_config_project_template_file:
+ocp_cluster_config_project_request_template: project-request
+ocp_cluster_config_project_request_message: "To request a new project fill out the project request form located at http://request.epaas.eu.airbus.corp/request/request_hosting.php"
+
+# Build customization
+ocp_cluster_config_build_settings:
+  # build_defaults
+  #   default_proxy:
+  #   env: [] # Not implemented
+  #   gitProxy: # Not implemented
+  #   imageLabels: [] # Not implemented
+  #   resources: # Not implemented
+  # build_overrides: # Not implemented
+  #   forcePull: # Not implemented
+  #   imageLabels: [] # Not implemented
+  #   nodeSelector: # Not implemented
+  #   tolerations: [] # Not implemented
+
 # Hardening, set True to enable hardening
 ## Disabling project self provisionning
 ocp_cluster_config_hardening_self_provisioning: True
-## Namespace creation request message
-ocp_cluster_config_hardening_nm_creation_request: True
-ocp_cluster_config_hardening_nm_creation_message: "To request a new project fill out the project request form located at http://request.epaas.eu.airbus.corp/request/request_hosting.php"
 ## Remove docker-build rights for customers
 ocp_cluster_config_hardening_docker_build: True
 ## Apply magic label on default ns to allow network policies
 ocp_cluster_config_hardening_allow_network_policies: True
-## Create & Apply base template for new projects
-ocp_cluster_config_hardening_projects_template: True
 ## Remove proxy env variables from build pods
 ocp_cluster_config_hardening_remove_proxy_env: True
 ## Enforce cluster-wide nodeSelector

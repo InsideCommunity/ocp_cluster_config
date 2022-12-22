@@ -1,0 +1,14 @@
+api_version: config.openshift.io/v1
+kind: Build
+metadata:
+  name: cluster
+spec:
+{% if ocp_cluster_config_build_settings.build_defaults | d(false) %}
+  buildDefaults:
+{% if ocp_cluster_config_build_settings.build_defaults.default_proxy | d(false) %}
+    defaultProxy: {{ ocp_cluster_config_build_settings.build_defaults.default_proxy }}
+{% endif %}
+{% endif %}
+{% if ocp_cluster_config_build_settings.build_overrides | d(false) %}
+  buildOverrides:
+{% endif %}
