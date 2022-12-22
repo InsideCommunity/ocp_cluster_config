@@ -5,6 +5,12 @@
   register: _logo
   when: ocp_cluster_config_webconsole_logo_path
 
+- name: Get custom login logo
+  ansible.builtin.slurp:
+    src: "{{ ocp_cluster_config_webconsole_login_logo_path }}"
+  register: _login_logo
+  when: ocp_cluster_config_webconsole_login_logo_path
+
 - name: Set Console Custom logo
   kubernetes.core.k8s:
     template:
@@ -12,6 +18,28 @@
       - console/custom_logo.yaml.j2
   when: _logo | d(false)
 
+- name: Set Console Custom login page as secret
+  kubernetes.core.k8s:
+    template: secret.yaml.j2
+  vars:
+    _secret_name: "custom-login-page-secret"
+    _secret_namespace: openshift-config
+    _secret_type: Opaque
+    _secrets:
+      providers.html: "{{ lookup('template','console/custom-providers-rh-template.html.j2', variable_start_string='[%', variable_end_string='%]') }}"
+  when: _login_logo | d(false)     
+
+- name: Patch oauth config
+  kubernetes.core.k8s_json_patch:
+    kind: OAuth
+    namespace: openshift-config
+    name: cluster
+    patch:
+      - op: replace
+        path: /spec/templates/providerSelection/name
+        value: custom-login-page-secret
+  when: _login_logo | d(false)
+  
 - name: Create special route for custom favicon
   kubernetes.core.k8s:
     template: console/custom_favicon.yaml.j2
