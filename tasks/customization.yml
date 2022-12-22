@@ -1,0 +1,22 @@
+---
+- name: Disabling project self-provisioning
+  kubernetes.core.k8s:
+    template: cluster_role/cluster_role_binding.yaml.j2
+  vars:
+    role_binding:
+      metadata:
+        name: self-provisioners
+        annotations:
+          rbac.authorization.kubernetes.io/autoudate: "false"
+        subjects: null
+  when: ocp_cluster_config_hardening_self_provisioning
+
+- name: Create base template for new projects
+  kubernetes.core.k8s:
+    src: "{{ ocp_cluster_config_project_template_file }}"
+  when: ocp_cluster_config_project_template_file | d(false)
+
+- name: Apply base template for new projects
+  kubernetes.core.k8s:
+    template: config/projectrequest.yaml.j2
+  when: ocp_cluster_config_project_template_file | d(false)

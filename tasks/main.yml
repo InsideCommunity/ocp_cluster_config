@@ -34,6 +34,9 @@
 - name: Webconsole Style
   ansible.builtin.include_tasks: webconsole.yml
 
+- name: Global customization
+  ansible.builtin.include_tasks: customization.yml
+
 - name: Hardening config
   ansible.builtin.include_tasks: hardening.yml
 
