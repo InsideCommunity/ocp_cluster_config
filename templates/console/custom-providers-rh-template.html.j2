@@ -198,7 +198,7 @@ body { background-color: var(--pf-global--BackgroundColor--dark-100); background
             {{ range $provider := .Providers }}
                 {{ if ne $provider.Name "kube:admin" }}
                     <li class="idp">
-                    <a href="{{$provider.URL}}" class="pf-c-button pf-m-secondary pf-m-block" title="NON PROD - Log in with {{$provider.Name}}">Connect...</a>
+                    <a href="{{$provider.URL}}" class="pf-c-button pf-m-secondary pf-m-block" title="[% env | upper | d('UNKNOWN ENV') %] - Log in with {{$provider.Name}}">Connect...</a>
                     </li>
                 {{ end }}
             {{ end }}
