@@ -1,0 +1,20 @@
+---
+- name: Generate IDP secret
+  kubernetes.core.k8s:
+    template: secret.yaml.j2
+  vars:
+    _secret_name: "idp-{{ idp.name }}-secret"
+    _secret_namespace: openshift-config
+    _secret_type: Opaque
+    _secrets:
+      clientSecret: "{{ idp.secret }}"
+  loop: "{{ ocp_cluster_config_idp_openid }}"
+  loop_control:
+    loop_var: idp
+
+- name: Set OpenID IDP
+  kubernetes.core.k8s:
+    template: idp/oauth.yaml.j2
+  loop: "{{ ocp_cluster_config_idp_openid }}"
+  loop_control:
+    loop_var: idp

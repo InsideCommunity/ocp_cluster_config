@@ -1,0 +1,24 @@
+---
+- name: Create custom kubelet config
+  kubernetes.core.k8s:
+    template: kubeletConfig.yml.j2
+
+- name: Get all available MCP
+  kubernetes.core.k8s_info:
+    kind: MachineConfigPool
+    api_version: machineconfiguration.openshift.io/v1
+  register: _mcps
+
+- name: Add custom-kubeconfig label to mcp
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: machineconfiguration.openshift.io/v1
+      kind: MachineConfigPool
+      metadata:
+        name: "{{ _mcp.metadata.name }}"
+        labels:
+          custom-kubeconfig: enabled
+  loop: "{{ _mcp.resources }}"
+  loop_control:
+    loop_var: _mcp
+    label: "{{ _mcp.metadata.name }}"

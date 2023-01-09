@@ -1,0 +1,15 @@
+galaxy_info:
+  author: Benjamin Mollé
+  description: Openshift cluster configuration
+  company: Redhat
+  license: BSD-3-Clause
+
+  min_ansible_version: 2.9.10
+
+  platforms:
+    - name: Openshift
+      versions:
+        - 4.10
+  galaxy_tags: []
+
+dependencies: []

@@ -1,0 +1,7 @@
+kind: Node
+metadata:
+  name: "{{ node_name }}"
+  labels:
+    node-role.kubernetes.io/infra: ""
+spec:
+  taints: "{{ ocp_cluster_config_infra_node_taints }}"

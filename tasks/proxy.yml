@@ -1,0 +1,5 @@
+---
+
+- name: Configure Proxy
+  kubernetes.core.k8s:
+    template: proxy/proxy.yaml.j2

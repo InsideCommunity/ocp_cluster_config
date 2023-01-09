@@ -1,0 +1,22 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: console-custom-favicon
+  namespace: openshift-console
+  labels:
+    app: console
+  annotations:
+    haproxy.router.openshift.io/rewrite-target: "{{ ocp_cluster_config_webconsole_favicon }}"
+spec:
+  host: "{{ ocp_cluster_config_console_url }}"
+  path: /favicon.ico
+  to:
+    kind: Service
+    name: console
+    weight: 100
+  port:
+    targetPort: https
+  tls:
+    termination: reencrypt
+    insecureEdgeTerminationPolicy: Redirect
+  wildcartPolicy: None

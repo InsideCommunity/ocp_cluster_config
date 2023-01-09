@@ -1,0 +1,12 @@
+apiVersion: config.openshift.io/v1
+kind: Project
+metadata:
+  name: cluster
+spec:
+{% if ocp_cluster_config_project_request_template %}
+  projectRequestTemplate:
+    name: "{{ ocp_cluster_config_project_request_template }}"
+{% endif %}
+{% if ocp_cluster_config_project_request_message | d(false) %}
+  projectRequestMessage: "{{ ocp_cluster_config_project_request_message }}"
+{% endif %}

@@ -1,0 +1,193 @@
+---
+
+# Identity Providers info
+ocp_cluster_config_idp_openid:
+  # - name:
+  #   secret:
+  #   mapping_method: # Optional
+  #   openid:
+  #     client_id:
+  #     ca: # Optional : ConfigMap for CA
+  #     extra_scopes: [] # Optional
+  #     extra_authorize_parameters: {} # Optional
+  #     claims:
+  #       preferred_username: [] # Optionnal
+  #       name: [] # Optionnal
+  #       email: [] # Optionnal
+  #       groups: [] # Optionnal
+  #   issuer:
+
+# Proxy config
+ocp_cluster_config_proxy:
+  # http_proxy: # Optionnal
+  # https_proxy: # Optionnal
+  # no_proxy: # Optionnal
+  # readiness_endpoints: [] # Optionnal
+  # trusted_ca: # Optionnal
+
+# Cluster role config
+ocp_cluster_config_cluster_roles: []
+  # - name:
+  #   labels: # Optionnal
+  #     example.for.label.name: "value"
+  #   rules:
+  #     - apiGroups:
+  #         - user.openshift.io
+  #         - ""
+  #       attributeRestrictions: null
+  #       resourceNames:
+  #         - system:admin
+  #       resources:
+  #         - systemusers
+  #       verbs:
+  #         - impersonate
+  #   aggregation_rule:
+  #     - example.for.aggregation.rule: "value"
+
+
+# Cluster role binding
+ocp_cluster_config_cluster_role_binding: []
+  # - metadata:
+  #     name:
+  #     annotations:
+  #       example: value
+  #   subjects:
+  #     - kind:
+  #       name:
+  #       apiGroup:
+  #   roleRef:
+  #     kind:
+  #     name:
+  #     apiGroup:
+
+# Configure API certificate
+ocp_cluster_config_api_certificate:
+  # fqdn:
+  # secret_name:
+  # crt:
+  # key:
+
+# Ingress Controller Configuration
+ocp_cluster_config_ingress_controller_secret_name: router-certs
+ocp_cluster_config_ingress_controller:
+  # crt:
+  # key:
+
+# Node config
+# List of Infra nodes name
+ocp_cluster_config_infra_nodes: []
+ocp_cluster_config_infra_node_taints:
+  - effect: NoSchedule
+    key: infra
+    value: reserved
+  - effect: NoExecute
+    key: infra
+    value: reserved
+
+# Router config
+ocp_cluster_config_set_router_label: false
+ocp_cluster_config_router_to_infra_node: false
+ocp_cluster_config_router_replicas: 3
+ocp_cluster_configrouter_tunningOptions:
+  clientTimeout: 60s
+  serverTimeout: 60s
+
+# Monitoring config
+ocp_cluster_config_monitoring_on_infra_node: false
+
+# ETCD Config
+ocp_cluster_config_etcd_encrypt: false
+
+# Console config
+ocp_cluster_config_console_url:
+
+# Webconsole Style
+ocp_cluster_config_webconsole_logo_path:
+ocp_cluster_config_webconsole_login_logo_path:
+ocp_cluster_config_webconsole_customproductname: openshift
+ocp_cluster_config_webconsole_favicon: #'/static/assets/openshift.svg'
+ocp_cluster_config_console_notification:
+  # backgroundColor: '#005587'
+  # color: '#fff'
+  # location: BannerTop
+  # text: 'Export Control: Not assessed'
+
+# Project template customization
+## Create & Apply base template for new projects. Need a file.
+ocp_cluster_config_project_template_file:
+ocp_cluster_config_project_request_template: project-request
+ocp_cluster_config_project_request_message: "To request a new project fill out the project request form located at http://request.epaas.eu.airbus.corp/request/request_hosting.php"
+
+# Build customization
+ocp_cluster_config_build_settings:
+  # build_defaults
+  #   default_proxy:
+  #   env: [] # Not implemented
+  #   gitProxy: # Not implemented
+  #   imageLabels: [] # Not implemented
+  #   resources: # Not implemented
+  # build_overrides: # Not implemented
+  #   forcePull: # Not implemented
+  #   imageLabels: [] # Not implemented
+  #   nodeSelector: # Not implemented
+  #   tolerations: [] # Not implemented
+
+# Hardening, set True to enable hardening
+## Disabling project self provisionning
+ocp_cluster_config_hardening_self_provisioning: True
+## Remove docker-build rights for customers
+ocp_cluster_config_hardening_docker_build: True
+## Apply magic label on default ns to allow network policies
+ocp_cluster_config_hardening_allow_network_policies: True
+## Remove proxy env variables from build pods
+ocp_cluster_config_hardening_remove_proxy_env: True
+## Enforce cluster-wide nodeSelector
+ocp_cluster_config_hardening_enforce_cluster_wide_nodeselector: True
+## Remove kubeadmin credentials
+ocp_cluster_config_hardening_remove_kubeadmin_cred: False
+## Remove scheduler constrains from default Namespace
+ocp_cluster_config_hardening_remove_schedule_constraints: True
+## Add edit rights to operators in default ns
+## TODO : Rework global RoleBinding
+ocp_cluster_config_hardening_edit_rights_operator_default_ns: True
+## Restrict allowed registries
+ocp_cluster_config_hardening_allowed_registries:
+  - registry.redhat.io
+  - quay.io
+  - registry.access.redhat.com
+  - registry.connect.redhat.com
+  - registry.2s59.eu.airbus.corp
+## Remove helmchart repository
+ocp_cluster_config_hardening_remove_helmchar_repo: True
+## Remove sample operator
+ocp_cluster_config_remove_sample_operator: True
+ocp_cluster_config_create_registries_whitelist: True
+ocp_cluster_config_registries_whitelist_for_import:
+  - domainName: registry.redhat.io
+    insecure: false
+  - domainName: quay.io
+    insecure: false
+  - domainName: registry.access.redhat.com
+    insecure: false
+  - domainName: registry.connect.redhat.com
+    insecure: false
+  - domainName: registry.2s59.eu.airbus.corp
+    insecure: false
+  - domainName: index.docker.io
+    insecure: false
+ocp_cluster_config_registries_whitelist_allowedRegistries:
+      - image-registry.openshift-image-registry.svc:5000
+      - registry.redhat.io
+      - registry.access.redhat.com
+      - registry.connect.redhat.com
+      - quay.io/openshift-release-dev
+      - registry.2s59.eu.airbus.corp
+      - index.docker.io
+
+# Tuning
+## Create & add custom-kubeconfig label to all mcp
+ocp_cluster_config_add_custom_kubeconfig_mcp: True
+ocp_cluster_config_kubelet_podPerCore: 10
+ocp_cluster_config_kubelet_maxPods: 240
+ocp_cluster_config_kubelet_cpu: 1000m
+ocp_cluster_config_kubelet_memory: 4Gi

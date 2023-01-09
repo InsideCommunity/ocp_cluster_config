@@ -1,0 +1,21 @@
+apiVersion: authorization.openshift.io/v1
+kind: ClusterRole
+metadata:
+  name: "{{ role.name }}"
+{% if role.labels | d(false) %}
+  labels:
+{% for key, value in role.labels.items() %}
+    {{ key }}: "{{ value }}"
+{% endfor %}
+{% endif %}
+{% if role.rules | d(false) %}
+rules: 
+  {{ role.rules | to_yaml | indent(2) }}
+{% endif %}
+{% if role.aggregation_rule | d(false) %}
+aggregationRule:
+  clusterRoleSelectors:
+{% for aggrule in role.aggregation_rule %}
+  - matchLabels: {{ aggrule }}
+{% endfor %}
+{% endif %}

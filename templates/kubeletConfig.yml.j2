@@ -1,0 +1,16 @@
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: KubeletConfig
+metadata:
+  name: kubeconfig
+spec:
+  autoSizingReserved: true
+  machineConfigPoolSelector:
+    matchLabels:
+      custom-kubeconfig: enabled
+  kubeletConfig: 
+    podsPerCore: {{ ocp_cluster_config_kubelet_podPerCore | default(10) }}
+    maxPods: {{ ocp_cluster_config_kubelet_maxPods | default(200) }}
+    systemReserved: null
+#      cpu: {{ ocp_cluster_config_kubelet_cpu | default('1000m') }}
+#      memory: {{ ocp_cluster_config_kubelet_memory | default('1Gi') }}

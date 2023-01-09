@@ -1,0 +1,55 @@
+---
+- name: Add Router label to node
+  kubernetes.core.k8s:
+    definition:
+      kind: Node
+      metadata:
+        name: "{{ ocp_cluster_config_node_name }}"
+        labels:
+          router: "true"
+  when: ocp_cluster_config_set_router_label
+
+- name: Move Router to infra node
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: operator.openshift.io/v1
+      kind: IngressController
+      metadata:
+        name: default
+        namespace: openshift-ingress-operator
+      spec:
+        nodePlacement:
+          nodeSelector:
+            matchLabels:
+              node-role.kubernetes.io/infra: ""
+          tolerations:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/infra
+              value: reserved
+            - effect: NoExecute
+              key: node-role.kubernetes.io/infra
+              value: reserved
+  when: ocp_cluster_config_router_to_infra_node
+
+- name: Scale Router
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: operator.openshift.io/v1
+      kind: IngressController
+      metadata:
+        name: default
+        namespace: openshift-ingress-operator
+      spec:
+        replicas: "{{ ocp_cluster_config_router_replicas }}"
+
+- name: Tunning router
+  kubernetes.core.k8s:
+    definition:
+      apiVersion: operator.openshift.io/v1
+      kind: IngressController
+      metadata:
+        name: default
+        namespace: openshift-ingress-operator
+      spec:
+        tunningOptions: "{{ ocp_cluster_configrouter_tunningOptions }}"
+  when: ocp_cluster_configrouter_tunningOptions
