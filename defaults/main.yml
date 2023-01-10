@@ -112,6 +112,14 @@ ocp_cluster_config_console_notification:
   # location: BannerTop
   # text: 'Export Control: Not assessed'
 
+ocp_cluster_config_session_timeout_targets:
+  - name: console
+    timeout: 36000
+  - name: openshift-browser-client
+    timeout: 36000
+  - name: openshift-challenging-client
+    timeout: 36000
+
 # Project template customization
 ## Create & Apply base template for new projects. Need a file.
 ocp_cluster_config_project_template_file:
