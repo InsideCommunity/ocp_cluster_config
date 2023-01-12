@@ -43,3 +43,6 @@
 - name: Tuning
   ansible.builtin.include_tasks: tuning.yml
   when: ocp_cluster_config_add_custom_kubeconfig_mcp
+
+- name: MachineConfig for kerberos
+  ansible.builtin.include_tasks: kerberos.yml
