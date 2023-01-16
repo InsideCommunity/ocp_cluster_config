@@ -1,9 +1,0 @@
-kind: Node
-metadata:
-  name: {{ _node_name }}
-  labels:
-    node-role.kubernetes.io/infra: ""
-{% if _taints | d(false) %}    
-spec:
-  taints: {{ _taints }}
-{% endif %}
