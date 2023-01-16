@@ -76,8 +76,9 @@ ocp_cluster_config_ingress_controller:
   # key:
 
 # Node config
-# List of Infra nodes name
-ocp_cluster_config_infra_nodes: []
+ocp_cluster_config_infra_nodes: "{{ groups['infra_only'] | length }}"
+# List of Infra nodes ansible inventory groups
+ocp_cluster_config_infra_groups: []
 ocp_cluster_config_infra_node_taints:
 #  - effect: NoSchedule
 #    key: infra

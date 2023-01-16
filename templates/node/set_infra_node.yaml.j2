@@ -1,9 +1,9 @@
 kind: Node
 metadata:
-  name: {{ node_name }}
+  name: {{ _node_name }}
   labels:
     node-role.kubernetes.io/infra: ""
-{% if ocp_cluster_config_infra_node_taints | d(false) %}    
+{% if _taints | d(false) %}    
 spec:
-  taints: {{ ocp_cluster_config_infra_node_taints }}
+  taints: {{ _taints }}
 {% endif %}
