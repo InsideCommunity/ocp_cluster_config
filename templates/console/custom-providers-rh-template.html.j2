@@ -212,12 +212,12 @@ body { background-color: var(--pf-global--BackgroundColor--dark-100); background
         <main class="pf-c-login__main">
           <div class="ec-containter">
             <div class="ec-title">      <center>
-              <div class="titleb">You need authorizations to access and use of this service<br> If you were not sure or if you have got an authentication error plese follow the link <b></div>
+              <div class="titleb">You need authorizations to access and use of this service<br> If you were not sure or if you have got an authentication error please follow the  <b><a href="https://confluence.airbus.corp/display/Z1U17ACPO/Openshift+console+access+issue">link</a></div>
             </div>
           </div>
           <div class="pf-c-login__main-body">
             
-            <h1 class="pf-c-title pf-m-3xl">[% env | upper | d('UNKNOWN ENV') %] - Airbus Container Plateform</h1>
+            <h1 class="pf-c-title pf-m-3xl">[% env | upper | d('UNKNOWN ENV') %] - 2S57 - Airbus Container Plateform</h1>
             <ul>
             {{ range $provider := .Providers }}
                 {{ if ne $provider.Name "kube:admin" }}
