@@ -16,8 +16,8 @@ spec:
     - effect: NoSchedule
       key: node-role.kubernetes.io/infra
       value: reserved
-    - effect: node-role.kubernetes.io/infra
-      key: infra
+    - effect: NoExecute
+      key: node-role.kubernetes.io/infra
       value: reserved
   replicas: {{ ocp_cluster_config_infra_nodes | int }}
 {%  else %}
