@@ -7,9 +7,8 @@
 
 - name: Get custom login logo
   ansible.builtin.slurp:
-    src: "{{ ocp_cluster_config_webconsole_login_logo_path }}"
+    src: "{{ ocp_cluster_config_webconsole_login_logo_path | default(ocp_cluster_config_webconsole_logo_path) }}"
   register: _login_logo
-  when: ocp_cluster_config_webconsole_login_logo_path
 
 - name: Set Console Custom logo
   kubernetes.core.k8s:
