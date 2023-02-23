@@ -190,30 +190,41 @@ body { background-color: var(--pf-global--BackgroundColor--dark-100); background
 
   <body class="pf-m-redhat-font">
     <div class="pf-c-login">
-      <div class="pf-c-login__container">
-        <header class="pf-c-login__header">
-        </header>
-        <main class="pf-c-login__main">
-          <div class="ec-containter">
-            <div class="ec-title">      <center>
-              <div class="titleb">You need authorizations to access and use of this service<br> If you were not sure or if you have got an authentication error please follow the  <b><a href="https://confluence.airbus.corp/display/Z1U17ACPO/Openshift+console+access+issue">link</a></div>
-            </div>
-          </div>
-          <div class="pf-c-login__main-body">
-            
-            <h1 class="pf-c-title pf-m-3xl">[% env | upper | d('UNKNOWN ENV') %] - 2S57 - Airbus Container Plateform</h1>
-            <ul>
-            {{ range $provider := .Providers }}
-                {{ if ne $provider.Name "kube:admin" }}
-                    <li class="idp">
+        <div class="pf-c-login__container">
+            <header class="pf-c-login__header">
+                <img src="data:image/png;base64,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" alt="Airbus Container Platform" \>
+                <p>
+                    If you have an infinite looping error, please ensure that <br>
+                    <ul>
+                        <li>- You are a member of the required namespace</li>
+                        <li>- You have accepted the Export Control Regulations - <a href="https://request.epaas.eu.airbus.corp/request/ec/ec-compliance.php">link</a></li>
+                        <li>- Please wait for ten minutes for the synchronization.</li>
+                        <li>- If the issue persists, please raise a request <a href="https://request.epaas.eu.airbus.corp/request/ocp4/">here</a>.</li>
+                    </ul>
+                </p>
+            </header>
+            <main class="pf-c-login__main">
+                <header class="pf-c-login__main-header">
+                    <h1 class="pf-c-title pf-m-3xl">[% if env != "ocp01" %]Non-Prod - [% endif %]Airbus Container Platform</h1>
+                    <p class="pf-c-login__main-header-desc">You need authorization to access this service.</p>
+                </header>
+                <div class="pf-c-login__main-body">
+                    <ul>
+                        {{ range $provider := .Providers }}
+                            {{ if ne $provider.Name "kube:admin" }}
+                                <li class="idp">
                     <a href="{{$provider.URL}}" class="pf-c-button pf-m-secondary pf-m-block" title="[% env | upper | d('UNKNOWN ENV') %] - Log in with {{$provider.Name}}">Log in</a>
-                    </li>
-                {{ end }}
-            {{ end }}
-            </ul>           
-          </div>
-        </main>
-      </div>
+                                </li>
+                            {{ end }}
+                        {{ end }}
+                    </ul>
+                </div>
+                <footer class="pf-c-login__main-footer">
+                    <div class="pf-c-login__main-footer-band">
+                        If you were not sure or if you have got an authentication error please follow the <b><a href="https://confluence.airbus.corp/display/Z1U17ACPO/Openshift+console+access+issue">link</a><br>
+                </footer>
+            </main>
+        </div>
     </div>
   </body>
 </html>
