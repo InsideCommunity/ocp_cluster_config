@@ -22,9 +22,7 @@
   kubernetes.core.k8s:
     template:
       - console/custom_logo.yaml.j2
-  vars:
-    login_logo_b64_data: "{{ _login_logo.content }}"
-  when: _login_logo | d(false)
+  when: _logo | d(false)
 
 - name: Set Console Custom login page as secret
   kubernetes.core.k8s:
