@@ -24,6 +24,9 @@
 
 - name: Infra node Config
   ansible.builtin.include_tasks: infra-node.yml
+  loop: "{{ ocp_cluster_config_infra_groups }}"
+  loop_control:
+    loop_var: _group_name
 
 - name: Monitoring Config
   ansible.builtin.include_tasks: monitor.yml

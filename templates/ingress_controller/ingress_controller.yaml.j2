@@ -14,12 +14,12 @@ spec:
         router: null
     tolerations:
     - effect: NoSchedule
+      key: node-role.kubernetes.io/infra
+      value: reserved
+    - effect: node-role.kubernetes.io/infra
       key: infra
       value: reserved
-    - effect: NoExecute
-      key: infra
-      value: reserved
-  replicas: {{ ocp_cluster_config_infra_nodes | count | int }}
+  replicas: {{ ocp_cluster_config_infra_nodes | int }}
 {%  else %}
   nodePlacement:
     nodeSelector:

@@ -1,9 +1,15 @@
 ---
+- name:
+  set_facts:
+    _hosts: "{{ groups[_group_name] }}"
+
+- name:
+  set_facts:    
+    _taints: "{{ hostvars[_hosts[0]].ocp_cluster_config_infra_node_taints }}"
+    
 - name: Set infra nodes label
   kubernetes.core.k8s:
     template: node/set_infra_node.yaml.j2
-#  loop: "{{ ocp_cluster_config_infra_nodes }}"
-  with_inventory_hostnames:
-    - infra
+  loop: "{{ _hosts }}"
   loop_control:
-    loop_var: node_name
+    loop_var: _node_name
