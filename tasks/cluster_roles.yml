@@ -1,4 +1,11 @@
 ---
+- template: 
+    src: cluster_role/cluster_role.yaml.j2
+    dest: "/tmp/{{ role.name }}.yml"
+  loop: "{{ ocp_cluster_config_cluster_roles }}"
+  loop_control:
+    loop_var: role
+
 - name: Create cluster roles rule
   kubernetes.core.k8s:
     template: cluster_role/cluster_role.yaml.j2

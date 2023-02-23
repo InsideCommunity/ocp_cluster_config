@@ -14,9 +14,14 @@
 - name: Set Console Custom logo
   kubernetes.core.k8s:
     template:
-      - console/confirmap-custom_logo.yaml.j2
-      - console/custom_logo.yaml.j2
+      - console/configmap-custom_logo.yaml.j2
   when: _logo | d(false)
+
+- name: Set Custom Login logo
+  kubernetes.core.k8s:
+    template:
+      - console/custom_logo.yaml.j2
+  when: _login_logo | d(false)
 
 - name: Set Console Custom login page as secret
   kubernetes.core.k8s:
@@ -30,14 +35,8 @@
   when: _login_logo | d(false)     
 
 - name: Patch oauth config
-  kubernetes.core.k8s_json_patch:
-    kind: OAuth
-    namespace: openshift-config
-    name: cluster
-    patch:
-      - op: replace
-        path: /spec/templates/providerSelection/name
-        value: custom-login-page-secret
+  kubernetes.core.k8s:
+    template: console/custom_provider_page.yaml.j2
   when: _login_logo | d(false)
   
 - name: Create special route for custom favicon

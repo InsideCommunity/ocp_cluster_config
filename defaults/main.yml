@@ -103,6 +103,8 @@ ocp_cluster_config_console_url:
 
 # Webconsole Style
 ocp_cluster_config_webconsole_logo_path:
+ocp_cluster_config_webconsole_login_logo_path:
+ocp_cluster_config_webconsole_customproductname: openshift
 ocp_cluster_config_webconsole_favicon: #'/static/assets/openshift.svg'
 ocp_cluster_config_console_notification:
   # backgroundColor: '#005587'
@@ -142,7 +144,7 @@ ocp_cluster_config_hardening_remove_proxy_env: True
 ## Enforce cluster-wide nodeSelector
 ocp_cluster_config_hardening_enforce_cluster_wide_nodeselector: True
 ## Remove kubeadmin credentials
-ocp_cluster_config_hardening_remove_kubeadmin_cred: True
+ocp_cluster_config_hardening_remove_kubeadmin_cred: False
 ## Remove scheduler constrains from default Namespace
 ocp_cluster_config_hardening_remove_schedule_constraints: True
 ## Add edit rights to operators in default ns

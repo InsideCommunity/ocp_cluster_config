@@ -5,7 +5,7 @@ metadata:
 {% if role_binding.metadata.annotations | d(false) %}
   annotations:
 {% for key, val in role_binding.metadata.annotations.items() %}
-    {{ key }}: {{ val }}
+    {{ key }}: "{{ val }}"
 {% endfor %}
 {% endif %}
 {% if role_binding.subjects | d(false) %}
@@ -16,14 +16,13 @@ subjects:
 {% for subject in role_binding.subjects %}
   - kind: {{ subject.kind }}
     name: {{ subject.name }}
-    apiGroup: {{ subject.apiGroup }}
-{% endif %}
-{% endif %}
+    apiGroup: {{ subject.api_group }}
 {% endfor %}
+{% endif %}
 {% endif %}
 {% if role_binding.roleRef | d(false) %}
 roleRef:
   kind: {{ role_binding.roleRef.kind }}
   name: {{ role_binding.roleRef.name }}
-  apiGroup: {{ role_binding.roleRef.apiGroup }}
+  apiGroup: {{ role_binding.roleRef.api_group }}
 {% endif %}

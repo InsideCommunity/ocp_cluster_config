@@ -2,6 +2,6 @@
 - name: Set infra nodes label
   kubernetes.core.k8s:
     template: node/set_infra_node.yaml.j2
-  loop: ocp_cluster_config_infra_nodes
+  loop: "{{ ocp_cluster_config_infra_nodes }}"
   loop_control:
     loop_var: node_name
