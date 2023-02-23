@@ -38,6 +38,14 @@
   kubernetes.core.k8s:
     template: console/custom_provider_page.yaml.j2
   when: _login_logo | d(false)
+
+- name: Modify session timeout
+  kubernetes.core.k8s:
+    template: console/custom_console_session_timeout.yaml.j2
+  when: ocp_cluster_config_console_session_timeout | d(false)
+  loop: "{{ ocp_cluster_config_session_timeout_targets }}"
+  loop_control:
+    loop_var: session
   
 - name: Create special route for custom favicon
   kubernetes.core.k8s:
