@@ -6,3 +6,28 @@ metadata:
 spec:
   defaultCertificate:
     name: "{{ ocp_cluster_config_ingress_controller_secret_name }}"
+{%  if ocp_cluster_config_infra_nodes is defined %}
+  nodePlacement:
+    nodeSelector:
+      matchLabels:
+        node-role.kubernetes.io/infra: ""
+        router: null
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/infra
+      value: reserved
+    - effect: NoExecute
+      key: node-role.kubernetes.io/infra
+      value: reserved
+  replicas: {{ ocp_cluster_config_infra_nodes | int }}
+{%  else %}
+  nodePlacement:
+    nodeSelector:
+      matchLabels:
+        router: "true" 
+    tolerations: []
+  replicas: {{ ocp_cluster_config_router.nodes | count | int }}
+{%  endif %}
+  tuningOptions:
+    clientTimeout: 60s
+    serverTimeout: 60s

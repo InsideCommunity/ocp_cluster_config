@@ -7,8 +7,8 @@
       metadata:
         name: self-provisioners
         annotations:
-          rbac.authorization.kubernetes.io/autoudate: "false"
-        subjects: null
+          rbac.authorization.kubernetes.io/autoupdate: "false"
+      subjects: null
   when: ocp_cluster_config_hardening_self_provisioning
 
 - name: Create base template for new projects

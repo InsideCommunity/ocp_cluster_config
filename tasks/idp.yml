@@ -8,13 +8,13 @@
     _secret_type: Opaque
     _secrets:
       clientSecret: "{{ idp.secret }}"
-  loop: ocp_cluster_config_idp
+  loop: "{{ ocp_cluster_config_idp_openid }}"
   loop_control:
     loop_var: idp
 
 - name: Set OpenID IDP
   kubernetes.core.k8s:
     template: idp/oauth.yaml.j2
-  loop: ocp_cluster_config_idp_openid
+  loop: "{{ ocp_cluster_config_idp_openid }}"
   loop_control:
     loop_var: idp

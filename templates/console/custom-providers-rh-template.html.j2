@@ -181,6 +181,10 @@ body { background-color: var(--pf-global--BackgroundColor--dark-100); background
 
 .idp { margin: 24px 0 0; }
 
+<!-- Custom Airbus block -->
+.ec-containter{ max-width: 20%; border-radius:10px 10px 10px 10px; margin-bottom:10px; background: rgb(2,0,36); background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(31,31,195,1) 37%); text-align:center }
+.ec-centerad{ vertical-align: middle; text-align: left; color: #c6d4df; padding: 5px 10px 0px 10px;}
+.ec-title { padding: 6px 0px 10px 0px; font-size: 11px;}
     </style>
   </head>
 
@@ -188,17 +192,21 @@ body { background-color: var(--pf-global--BackgroundColor--dark-100); background
     <div class="pf-c-login">
       <div class="pf-c-login__container">
         <header class="pf-c-login__header">
-           <img src="data:image/png;base64,[% _login_logo %]" alt="Airbus Container Platform logo" class="pf-c-brand" />
         </header>
         <main class="pf-c-login__main">
+          <div class="ec-containter">
+            <div class="ec-title">      <center>
+              <div class="titleb">You need authorizations to access and use of this service<br> If you were not sure or if you have got an authentication error please follow the  <b><a href="https://confluence.airbus.corp/display/Z1U17ACPO/Openshift+console+access+issue">link</a></div>
+            </div>
+          </div>
           <div class="pf-c-login__main-body">
             
-            <h1 class="pf-c-title pf-m-3xl">NON PROD - Log in with&hellip;</h1>
+            <h1 class="pf-c-title pf-m-3xl">[% env | upper | d('UNKNOWN ENV') %] - 2S57 - Airbus Container Plateform</h1>
             <ul>
             {{ range $provider := .Providers }}
                 {{ if ne $provider.Name "kube:admin" }}
                     <li class="idp">
-                    <a href="{{$provider.URL}}" class="pf-c-button pf-m-secondary pf-m-block" title="[% env | upper | d('UNKNOWN ENV') %] - Log in with {{$provider.Name}}">Connect...</a>
+                    <a href="{{$provider.URL}}" class="pf-c-button pf-m-secondary pf-m-block" title="[% env | upper | d('UNKNOWN ENV') %] - Log in with {{$provider.Name}}">Log in</a>
                     </li>
                 {{ end }}
             {{ end }}

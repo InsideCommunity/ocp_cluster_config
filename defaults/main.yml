@@ -1,4 +1,6 @@
 ---
+# kerberos config
+ocp_cluster_config_krb5_realm: eu.airbus.corp
 
 # Identity Providers info
 ocp_cluster_config_idp_openid:
@@ -72,17 +74,8 @@ ocp_cluster_config_ingress_controller_secret_name: router-certs
 ocp_cluster_config_ingress_controller:
   # crt:
   # key:
-
-# Node config
-# List of Infra nodes name
-ocp_cluster_config_infra_nodes: []
-ocp_cluster_config_infra_node_taints:
-  - effect: NoSchedule
-    key: infra
-    value: reserved
-  - effect: NoExecute
-    key: infra
-    value: reserved
+# Number of Infra node for router scalability
+ocp_cluster_config_infra_nodes: "{{ groups['infra_only'] | length }}"
 
 # Router config
 ocp_cluster_config_set_router_label: false
@@ -103,12 +96,22 @@ ocp_cluster_config_console_url:
 
 # Webconsole Style
 ocp_cluster_config_webconsole_logo_path:
+ocp_cluster_config_webconsole_login_logo_path:
+ocp_cluster_config_webconsole_customproductname: openshift
 ocp_cluster_config_webconsole_favicon: #'/static/assets/openshift.svg'
 ocp_cluster_config_console_notification:
   # backgroundColor: '#005587'
   # color: '#fff'
   # location: BannerTop
   # text: 'Export Control: Not assessed'
+
+ocp_cluster_config_session_timeout_targets:
+  - name: console
+    timeout: 36000
+  - name: openshift-browser-client
+    timeout: 36000
+  - name: openshift-challenging-client
+    timeout: 36000
 
 # Project template customization
 ## Create & Apply base template for new projects. Need a file.
@@ -142,7 +145,7 @@ ocp_cluster_config_hardening_remove_proxy_env: True
 ## Enforce cluster-wide nodeSelector
 ocp_cluster_config_hardening_enforce_cluster_wide_nodeselector: True
 ## Remove kubeadmin credentials
-ocp_cluster_config_hardening_remove_kubeadmin_cred: True
+ocp_cluster_config_hardening_remove_kubeadmin_cred: False
 ## Remove scheduler constrains from default Namespace
 ocp_cluster_config_hardening_remove_schedule_constraints: True
 ## Add edit rights to operators in default ns

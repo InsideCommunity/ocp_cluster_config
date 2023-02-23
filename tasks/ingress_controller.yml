@@ -6,7 +6,7 @@
       - ingress_controller/ingress_controller.yaml.j2
   vars:
     _secret_name: "{{ ocp_cluster_config_ingress_controller_secret_name_secret_name }}"
-    _secret_namespace: openshift-config
+    _secret_namespace: openshift-ingress
     _secrets:
       tls.crt: "{{ ocp_cluster_config_ingress_controller.crt }}"
       tls.key: "{{ ocp_cluster_config_ingress_controller.key }}"

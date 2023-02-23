@@ -2,7 +2,7 @@
 
 - name: Identity Providers Configuration
   ansible.builtin.include_tasks: idp.yml
-  when: ocp_cluster_config_idp
+  when: ocp_cluster_config_idp_openid
 
 - name: Proxy Configuration
   ansible.builtin.include_tasks: proxy.yml
@@ -13,17 +13,14 @@
 
 - name: API Certificate
   ansible.builtin.include_tasks: api_certificate.yml
-  when: ocp_cluster_config_api_certificate
+  when: ocp_cluster_config_api_certificate is defined
 
 - name: Console Config
   ansible.builtin.include_tasks: console.yml
 
 - name: Ingress Controller Config
   ansible.builtin.include_tasks: ingress_controller.yml
-  when: ocp_cluster_config_ingress_controller
-
-- name: Infra node Config
-  ansible.builtin.include_tasks: infra-node.yml
+  when: ocp_cluster_config_ingress_controller is defined
 
 - name: Monitoring Config
   ansible.builtin.include_tasks: monitor.yml
@@ -43,3 +40,6 @@
 - name: Tuning
   ansible.builtin.include_tasks: tuning.yml
   when: ocp_cluster_config_add_custom_kubeconfig_mcp
+
+- name: MachineConfig for kerberos
+  ansible.builtin.include_tasks: kerberos.yml

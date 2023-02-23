@@ -7,14 +7,20 @@
 
 - name: Get custom login logo
   ansible.builtin.slurp:
-    src: "{{ ocp_cluster_config_webconsole_login_logo_path }}"
+    src: "{{ ocp_cluster_config_webconsole_login_logo_path | default(ocp_cluster_config_webconsole_logo_path) }}"
   register: _login_logo
-  when: ocp_cluster_config_webconsole_login_logo_path
 
 - name: Set Console Custom logo
   kubernetes.core.k8s:
     template:
-      - console/confirmap-custom_logo.yaml.j2
+      - console/configmap-custom_logo.yaml.j2
+  vars:
+    logo_b64_data: "{{ _logo.content }}"
+  when: _logo | d(false)
+
+- name: Set Custom Login logo
+  kubernetes.core.k8s:
+    template:
       - console/custom_logo.yaml.j2
   when: _logo | d(false)
 
@@ -22,6 +28,7 @@
   kubernetes.core.k8s:
     template: secret.yaml.j2
   vars:
+    login_logo_b64_data: "{{ _login_logo.content }}"
     _secret_name: "custom-login-page-secret"
     _secret_namespace: openshift-config
     _secret_type: Opaque
@@ -30,15 +37,17 @@
   when: _login_logo | d(false)     
 
 - name: Patch oauth config
-  kubernetes.core.k8s_json_patch:
-    kind: OAuth
-    namespace: openshift-config
-    name: cluster
-    patch:
-      - op: replace
-        path: /spec/templates/providerSelection/name
-        value: custom-login-page-secret
+  kubernetes.core.k8s:
+    template: console/custom_provider_page.yaml.j2
   when: _login_logo | d(false)
+
+- name: Modify session timeout
+  kubernetes.core.k8s:
+    template: console/custom_console_session_timeout.yaml.j2
+  when: ocp_cluster_config_console_session_timeout | d(false)
+  loop: "{{ ocp_cluster_config_session_timeout_targets }}"
+  loop_control:
+    loop_var: session
   
 - name: Create special route for custom favicon
   kubernetes.core.k8s:

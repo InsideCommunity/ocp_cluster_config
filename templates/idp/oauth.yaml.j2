@@ -10,8 +10,8 @@ spec:
       openID:
         clientID: {{ idp.openid.client_id }}
         clientSecret:
-          name: "idp-{{ idp.name }}-secret"
-{% if idp.ca | d(false) %
+          name: "idp-{{ (idp.name | lower) }}-secret"
+{% if idp.ca | d(false) %}
         ca:
           name: {{ idp.ca }}
 {% endif %}
