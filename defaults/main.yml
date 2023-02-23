@@ -74,18 +74,8 @@ ocp_cluster_config_ingress_controller_secret_name: router-certs
 ocp_cluster_config_ingress_controller:
   # crt:
   # key:
-
-# Node config
+# Number of Infra node for router scalability
 ocp_cluster_config_infra_nodes: "{{ groups['infra_only'] | length }}"
-# List of Infra nodes ansible inventory groups
-ocp_cluster_config_infra_groups: []
-ocp_cluster_config_infra_node_taints:
-#  - effect: NoSchedule
-#    key: infra
-#    value: reserved
-#  - effect: NoExecute
-#    key: infra
-#    value: reserved
 
 # Router config
 ocp_cluster_config_set_router_label: false
