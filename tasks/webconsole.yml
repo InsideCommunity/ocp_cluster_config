@@ -30,6 +30,7 @@
   kubernetes.core.k8s:
     template: secret.yaml.j2
   vars:
+    login_logo_b64_data: "{{ _login_logo.content }}"
     _secret_name: "custom-login-page-secret"
     _secret_namespace: openshift-config
     _secret_type: Opaque
