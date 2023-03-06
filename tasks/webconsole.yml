@@ -33,7 +33,7 @@
     _secret_namespace: openshift-config
     _secret_type: Opaque
     _secrets:
-      providers.html: "{{ lookup('template','console/custom-providers-rh-template.html.j2', variable_start_string='[%', variable_end_string='%]') }}"
+      providers.html: "{{ lookup('template','console/custom-providers-rh-template.html.j2', variable_start_string='[%', variable_end_string='%]', block_start_string='[[%', block_end_string='%]]') }}"
   when: _login_logo | d(false)     
 
 - name: Patch oauth config

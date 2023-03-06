@@ -107,7 +107,7 @@ button:-moz-focusring, [type="button"]:-moz-focusring, [type="reset"]:-moz-focus
 .pf-c-login__footer .pf-c-list a { color: unset; }
 .pf-c-login__footer .pf-c-list:not(:only-child) { padding-top: var(--pf-c-login__footer--c-list--PaddingTop); }
 
-body { background-color: var(--pf-global--BackgroundColor--dark-100); background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI0LjAuMiwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHdpZHRoPSIxOTJweCIgaGVpZ2h0PSIxNDVweCIgdmlld0JveD0iMCAwIDE5MiAxNDUiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDE5MiAxNDU7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7ZmlsbDojMDIwMzAzO30KPC9zdHlsZT4KPGc+Cgk8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTI3LjUsODMuNWMxMi41LDAsMzAuNi0yLjYsMzAuNi0xNy41YzAtMS4yLDAtMi4zLTAuMy0zLjRsLTcuNC0zMi40Yy0xLjctNy4xLTMuMi0xMC4zLTE1LjctMTYuNgoJCWMtOS43LTUtMzAuOC0xMy4xLTM3LjEtMTMuMUM5MS43LDAuNSw5MCw4LDgzLjEsOGMtNi43LDAtMTEuNi01LjYtMTcuOS01LjZjLTYsMC05LjksNC4xLTEyLjksMTIuNWMwLDAtOC40LDIzLjctOS41LDI3LjIKCQljLTAuMiwwLjYtMC4yLDEuNC0wLjIsMS45QzQyLjUsNTMuMyw3OC44LDgzLjUsMTI3LjUsODMuNSBNMTYwLDcyLjFjMS43LDguMiwxLjcsOS4xLDEuNywxMC4xYzAsMTQtMTUuNywyMS44LTM2LjQsMjEuOAoJCWMtNDYuOCwwLTg3LjctMjcuNC04Ny43LTQ1LjVjMC0yLjgsMC42LTUuNCwxLjUtNy4zQzIyLjMsNTIsMC41LDU1LDAuNSw3NC4yYzAsMzEuNSw3NC42LDcwLjMsMTMzLjcsNzAuMwoJCWM0NS4zLDAsNTYuNy0yMC41LDU2LjctMzYuNkMxOTAuOCw5NS4xLDE3OS45LDgwLjcsMTYwLDcyLjEiLz4KPC9nPgo8L3N2Zz4K); background-position: 110% 105%; background-repeat: no-repeat; background-size: 90%; }
+body { background-color: var(--pf-global--BackgroundColor--dark-100); background-position: 110% 105%; background-repeat: no-repeat; background-size: 90%; }
 @media (min-width: 768px) { body { background-size: 80%; } }
 @media (min-width: 1000px) { body { background-position: 110% 100%; background-size: 70%; } }
 @media (min-width: 1200px) { body { background-position: 100% 70%; background-size: 70%; } }
@@ -205,7 +205,7 @@ body { background-color: var(--pf-global--BackgroundColor--dark-100); background
             </header>
             <main class="pf-c-login__main">
                 <header class="pf-c-login__main-header">
-                    <h1 class="pf-c-title pf-m-3xl">[% if env != "ocp01" %]Non-Prod - [% endif %]Airbus Container Platform</h1>
+                    <h1 class="pf-c-title pf-m-3xl">{% if env != "ocp01" %}Non-Prod - {% endif %}Airbus Container Platform</h1>
                     <p class="pf-c-login__main-header-desc">You need authorization to access this service.</p>
                 </header>
                 <div class="pf-c-login__main-body">
@@ -221,7 +221,7 @@ body { background-color: var(--pf-global--BackgroundColor--dark-100); background
                 </div>
                 <footer class="pf-c-login__main-footer">
                     <div class="pf-c-login__main-footer-band">
-                        If you were not sure or if you have got an authentication error please follow the <b><a href="https://confluence.airbus.corp/display/Z1U17ACPO/Openshift+console+access+issue">link</a><br>
+                        If you were not sure or if you have got an authentication error please follow the <b><a href="https://confluence.airbus.corp/display/Z1U17ACPO/Openshift4++console+access+issue">link</a><br>
                 </footer>
             </main>
         </div>
